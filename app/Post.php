@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon; //Для изменения даты
 
@@ -104,12 +105,12 @@ class Post extends Model
     }
 
     public function setDraft() {
-        $this->status = 0;
+        $this->status = 1;
         $this->save();
     }
 
     public function setPublic() {
-        $this->status = 1;
+        $this->status = 0;
         $this->save();
     }
 
