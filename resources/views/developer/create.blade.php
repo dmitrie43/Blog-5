@@ -1,37 +1,33 @@
-@extends('admin.layout')
+@extends('layout')
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>Изменить статью
-                <small>приятные слова..</small>
-            </h1>
+
         </section>
 
         <!-- Main content -->
         <section class="content">
-            {{Form::open([
-                'route' => ['posts.update', $post->id],
-                'files' => true,
-                'method' => 'put'
-            ])}}
-            <!-- Default box -->
-            <div class="box">
+        {{Form::open([
+            'route' => 'developer.store',
+            'files' => true
+        ])}}
+        <!-- Default box -->
+            <div class="col-md-12">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Обновляем статью</h3>
+                    <h3 class="box-title">Добавляем статью</h3>
                     @include('admin.errors')
                 </div>
                 <div class="box-body">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Название</label>
-                            <input name="title" type="text" class="form-control" id="exampleInputEmail1" placeholder="" value="{{$post->title}}">
+                            <input name="title" value="{{old('title')}}" type="text" class="form-control" id="exampleInputEmail1" placeholder="">
                         </div>
 
                         <div class="form-group">
-                            <img src="{{$post->getImage()}}" alt="" class="img-responsive" width="200">
                             <label for="exampleInputFile">Лицевая картинка</label>
                             <input name="image" type="file" id="exampleInputFile">
 
@@ -41,25 +37,25 @@
                             <label>Категория</label>
                             {{Form::select('category_id',
                             $categories,
-                            ($post->category != null) ? $post->category->id : null,
+                            null,
                             ['class' => 'form-control select2'])}}
                         </div>
                         <div class="form-group">
                             <label>Теги</label>
                             {{Form::select('tags[]',
                             $tags,
-                            $post->tags->pluck('id')->all(),
+                            null,
                             ['class' => 'form-control select2', 'multiple' => 'multiple', 'data-placeholder' => 'Выберите теги'])}}
                         </div>
                         <!-- Date -->
-                        <div class="form-group">
+                        <div class="form-group" hidden>
                             <label>Дата:</label>
 
                             <div class="input-group date">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
-                                <input type="date" class="form-control pull-right" id="datepicker" value="{{$post->date}}" name="date">
+                                <input name="date" value="{{ date('Y-m-d') }}" type="date" class="form-control pull-right" id="datepicker">
                             </div>
                             <!-- /.input group -->
                         </div>
@@ -67,39 +63,26 @@
                         <!-- checkbox -->
                         <div class="form-group">
                             <label>
-                                {{Form::checkbox('is_featured', '1', $post->is_featured, ['class'=>'minimal'])}}
-                            </label>
-                            <label>
-                                Рекомендовать
-                            </label>
-                        </div>
-                        <!-- checkbox -->
-                        <div class="form-group">
-                            <label>
-                                {{Form::checkbox('status', '1', $post->status, ['class'=>'minimal'])}}
-                            </label>
-                            <label>
-                                Черновик
+                                <input hidden name="status" type="checkbox" class="minimal">
                             </label>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Описание</label>
-                            <textarea name="description" id="" cols="30" rows="10" class="form-control">{{$post->description}}</textarea>
+                            <textarea name="description" id="" cols="30" rows="10" class="form-control">{{old('description')}}</textarea>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Полный текст</label>
-                            <textarea name="content" id="" cols="30" rows="10" class="form-control">{{$post->content}}</textarea>
+                            <textarea name="content" id="" cols="30" rows="10" class="form-control"></textarea>
                         </div>
                     </div>
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
-                    <a href="{{route('posts.index')}}" class="btn btn-default">Назад</a>
-                    <button class="btn btn-warning pull-right">Изменить</button>
+                    <button class="btn btn-success pull-right">Добавить</button>
                 </div>
                 <!-- /.box-footer-->
             </div>
@@ -109,5 +92,4 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-
 @endsection

@@ -1,33 +1,31 @@
-@extends('admin.layout')
+@extends('layout')
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>Изменить статью
-                <small>приятные слова..</small>
-            </h1>
+
         </section>
 
         <!-- Main content -->
         <section class="content">
-            {{Form::open([
-                'route' => ['posts.update', $post->id],
-                'files' => true,
-                'method' => 'put'
-            ])}}
-            <!-- Default box -->
-            <div class="box">
+        {{Form::open([
+            'route' => ['developer.update', $post->id],
+            'files' => true,
+            'method' => 'put'
+        ])}}
+        <!-- Default box -->
+            <div class="col-md-12">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Обновляем статью</h3>
+                    <h3 class="box-title">Изменяем статью</h3>
                     @include('admin.errors')
                 </div>
                 <div class="box-body">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Название</label>
-                            <input name="title" type="text" class="form-control" id="exampleInputEmail1" placeholder="" value="{{$post->title}}">
+                            <input name="title" value="{{$post->title}}" type="text" class="form-control" id="exampleInputEmail1" placeholder="">
                         </div>
 
                         <div class="form-group">
@@ -52,34 +50,22 @@
                             ['class' => 'form-control select2', 'multiple' => 'multiple', 'data-placeholder' => 'Выберите теги'])}}
                         </div>
                         <!-- Date -->
-                        <div class="form-group">
-                            <label>Дата:</label>
+                        {{--<div class="form-group" hidden>--}}
+                            {{--<label>Дата:</label>--}}
 
-                            <div class="input-group date">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar"></i>
-                                </div>
-                                <input type="date" class="form-control pull-right" id="datepicker" value="{{$post->date}}" name="date">
-                            </div>
-                            <!-- /.input group -->
-                        </div>
+                            {{--<div class="input-group date">--}}
+                                {{--<div class="input-group-addon">--}}
+                                    {{--<i class="fa fa-calendar"></i>--}}
+                                {{--</div>--}}
+                                {{--<input name="date" value="{{ date('Y-m-d') }}" type="date" class="form-control pull-right" id="datepicker">--}}
+                            {{--</div>--}}
+                            {{--<!-- /.input group -->--}}
+                        {{--</div>--}}
 
                         <!-- checkbox -->
                         <div class="form-group">
                             <label>
-                                {{Form::checkbox('is_featured', '1', $post->is_featured, ['class'=>'minimal'])}}
-                            </label>
-                            <label>
-                                Рекомендовать
-                            </label>
-                        </div>
-                        <!-- checkbox -->
-                        <div class="form-group">
-                            <label>
-                                {{Form::checkbox('status', '1', $post->status, ['class'=>'minimal'])}}
-                            </label>
-                            <label>
-                                Черновик
+                                <input hidden name="status" type="checkbox" class="minimal">
                             </label>
                         </div>
                     </div>
@@ -98,8 +84,7 @@
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
-                    <a href="{{route('posts.index')}}" class="btn btn-default">Назад</a>
-                    <button class="btn btn-warning pull-right">Изменить</button>
+                    <button class="btn btn-success pull-right">Добавить</button>
                 </div>
                 <!-- /.box-footer-->
             </div>
@@ -109,5 +94,4 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-
 @endsection

@@ -11,8 +11,8 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
-Route::get('/developer', 'DeveloperController@index');
+Route::get('/', 'HomeController@index')->name('home');
+Route::resource('/developer', 'DeveloperController');
 
 Auth::routes();
 
@@ -42,7 +42,13 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'admi
     Route::resource('/categories', 'CategoriesController'); //Вместо того чтобы создавать много роутов на создание, изменение и удаление
     Route::resource('/tags', 'TagsController');
     Route::resource('/users', 'UsersController');
-    Route::resource('/posts', 'PostsController');
+//    Route::resource('/posts', 'PostsController');
+    Route::get('/posts', 'PostsController@index')->name('posts.index');
+    Route::delete('/posts/{id}', 'PostsController@destroy')->name('posts.destroy');
+    Route::post('/posts', 'PostsController@store')->name('posts.store');
+    Route::get('/posts/{id}/edit', 'PostsController@edit')->name('posts.edit');
+    Route::put('/posts/{id}', 'PostsController@update')->name('posts.update');
+    Route::get('/posts/create', 'PostsController@create')->name('posts.create');
     Route::get('/comments', 'CommentsController@index');
     Route::get('/comments/toggle/{id}', 'CommentsController@toggle');
     Route::delete('/comments/{id}/destroy', 'CommentsController@destroy')->name('comments.destroy');
